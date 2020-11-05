@@ -12,9 +12,7 @@ import org.apache.http.util.EntityUtils;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class GitHubClient {
     private static final String URL_TEMPLATE = "https://jobs.github.com/positions.json?description=%s&lat=%s&long=%s";
@@ -26,9 +24,9 @@ public class GitHubClient {
         }
 
         //'hello world' => 'hello%20world'
-        try{
+        try {
             keyword = URLEncoder.encode(keyword, "UTF-8");
-        }catch(UnsupportedEncodingException e){
+        } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
 
@@ -38,24 +36,39 @@ public class GitHubClient {
 
         // create a custom response handler
         ResponseHandler<List<Item>> responseHandler = response -> {
-            if (response.getStatusLine().getStatusCode() != 200){
+            if (response.getStatusLine().getStatusCode() != 200) {
                 return Collections.emptyList();
             }
             HttpEntity entity = response.getEntity();
-            if (entity == null){
+            if (entity == null) {
                 return Collections.emptyList();
             }
             ObjectMapper mapper = new ObjectMapper();
-            return Arrays.asList(mapper.readValue(entity.getContent(), Item[].class));
+            List<Item> items = Arrays.asList(mapper.readValue(entity.getContent(), Item[].class));
+            extractKeywords(items);
+            return items;
         };
 
-        try{
+        try {
             return httpclient.execute(new HttpGet(url), responseHandler);
-        }catch(IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
         return Collections.emptyList();
+    }
+
+    private void extractKeywords(List<Item> items) {
+        MonkeyLearnClient monkeyLearnClient = new MonkeyLearnClient();
+        List<String> descriptions = new ArrayList<>();
+        for (Item item : items) {
+            descriptions.add(item.getDescription());
+        }
+
+        List<Set<String>> keywordList = monkeyLearnClient.extract(descriptions);
+        for (int i = 0; i < items.size(); i++) {
+            items.get(i).setKeywords(keywordList.get(i));
+        }
     }
 };
 

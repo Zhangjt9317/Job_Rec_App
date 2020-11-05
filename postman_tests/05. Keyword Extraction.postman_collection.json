@@ -1,0 +1,145 @@
+{
+	"info": {
+		"_postman_id": "cb080a03-c0f2-4781-b1b3-b4f518ddda72",
+		"name": "05. Keyword Extraction",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET Search",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response is an array\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.be.an(\"array\");",
+							"});",
+							"",
+							"pm.test(\"Response has id\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData[0]).to.have.property('id');",
+							"});",
+							"",
+							"pm.test(\"Response has title\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData[0]).to.have.property('title');",
+							"});",
+							"",
+							"pm.test(\"Response has description\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData[0]).to.have.property('description');",
+							"});",
+							"",
+							"pm.test(\"Response has keywords\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData[0]).to.have.property('keywords');",
+							"});",
+							""
+						],
+						"id": "a757e3b1-a8e8-46fa-adc3-51bcf1a4dc01"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/jupiter/search?lat=37.38&lon=-122.08&user_id=1111",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"jupiter",
+						"search"
+					],
+					"query": [
+						{
+							"key": "lat",
+							"value": "37.38"
+						},
+						{
+							"key": "lon",
+							"value": "-122.08"
+						},
+						{
+							"key": "user_id",
+							"value": "1111"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "MonkeyLearn Raw Request",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Token 8e6d6d76a45fc43c48abe2f2e496aaa0c0b37981",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"data\": [\n    \"Elon Musk has shared a photo of the spacesuit designed by SpaceX. This is the second image shared of the new design and the first to feature the spacesuit’s full-body look.\",\n    \"Former Auburn University football coach Tommy Tuberville defeated ex-US Attorney General Jeff Sessions in Tuesday nights runoff for the Republican nomination for the U.S. Senate.\",\n    \"The NEOWISE comet has been delighting skygazers around the world this month – with photographers turning their lenses upward and capturing it above landmarks across the Northern Hemisphere.\"\n  ],\n  \"max_keywords\": 3\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.monkeylearn.com/v3/extractors/ex_YCya9nrn/extract/",
+					"protocol": "https",
+					"host": [
+						"api",
+						"monkeylearn",
+						"com"
+					],
+					"path": [
+						"v3",
+						"extractors",
+						"ex_YCya9nrn",
+						"extract",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "f256dae1-9ed7-4a44-9329-8e6b71c971ff",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "e53dd198-02fc-4053-82a7-65db55378591",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

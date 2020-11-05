@@ -1,0 +1,111 @@
+{
+	"info": {
+		"_postman_id": "b77ef14b-505a-45ab-ab79-736321d97ebd",
+		"name": "03. GitHub API 1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET Search",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response is an array\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.be.an(\"array\");",
+							"});",
+							"",
+							"pm.test(\"Response has id\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData[0]).to.have.property('id');",
+							"});",
+							"",
+							"pm.test(\"Response has title\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData[0]).to.have.property('title');",
+							"});",
+							"",
+							"pm.test(\"Response has description\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData[0]).to.have.property('description');",
+							"});",
+							"",
+							"",
+							""
+						],
+						"id": "46feafb0-2645-4cd2-a4b1-3cba906a77fc"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/jupiter/search?lat=37.38&lon=-122.08",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"jupiter",
+						"search"
+					],
+					"query": [
+						{
+							"key": "lat",
+							"value": "37.38"
+						},
+						{
+							"key": "lon",
+							"value": "-122.08"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Github Raw Request",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://jobs.github.com/positions.json?description=developers&lat=37.38&long=-122.08",
+					"protocol": "https",
+					"host": [
+						"jobs",
+						"github",
+						"com"
+					],
+					"path": [
+						"positions.json"
+					],
+					"query": [
+						{
+							"key": "description",
+							"value": "developers"
+						},
+						{
+							"key": "lat",
+							"value": "37.38"
+						},
+						{
+							"key": "long",
+							"value": "-122.08"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

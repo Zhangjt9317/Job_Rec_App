@@ -1,0 +1,102 @@
+{
+	"info": {
+		"_postman_id": "a5275838-12e9-4a1a-887f-3dc1af61d4b0",
+		"name": "04. GitHub API 2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET Search",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response is an array\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.be.an(\"array\");",
+							"});",
+							"",
+							"pm.test(\"Response has id\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData[0]).to.have.property('id');",
+							"});",
+							"",
+							"pm.test(\"Response has title\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData[0]).to.have.property('title');",
+							"});",
+							"",
+							"pm.test(\"Response has description\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData[0]).to.have.property('description');",
+							"});",
+							"",
+							"pm.test(\"Response does not have keywords\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData[0]).to.not.have.property('keywords');",
+							"});",
+							""
+						],
+						"id": "12d107d7-da6c-4534-a6ac-16ec3574ef81"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/jupiter/search?lat=37.38&lon=-122.08",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"jupiter",
+						"search"
+					],
+					"query": [
+						{
+							"key": "lat",
+							"value": "37.38"
+						},
+						{
+							"key": "lon",
+							"value": "-122.08"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "15cd0a26-a3c7-4ea6-b81b-db23f3a9f2b0",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "2807d070-1cd1-4ef0-9139-5d0b0cab92c3",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
